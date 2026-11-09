@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore simulated VPS provisioning and lifecycle controls in the MoolyaHost portal prototype.">
+  <title>MoolyaHost Console · Interactive Demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="bar-inner">
+      <div class="brand"><span class="mark" aria-hidden="true">M</span><div><strong>MoolyaHost</strong><small>Infrastructure console</small></div></div>
+      <a href="https://moolyaindiapvtltd.com/">Company website <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">VPS workspace</p>
+      <h1 id="title">Virtual servers</h1>
+      <p>Provision a server, manage its power state, and follow each operation in the activity log.</p>
+      <div class="notice"><strong>Interactive demo</strong><span>Servers and operations are simulated. Changes stay in this browser.</span></div>
+    </section>
+    <dl class="metrics">
+      <div><dt>Instances</dt><dd id="total">0</dd></div>
+      <div><dt>Running</dt><dd id="running">0</dd></div>
+      <div><dt>Allocated vCPU</dt><dd id="cpu">0</dd></div>
+    </dl>
+    <div class="workspace">
+      <section class="panel" aria-labelledby="instances-title">
+        <header class="section-head">
+          <div><h2 id="instances-title">Instances</h2><p>Browse and manage your simulated servers.</p></div>
+          <button class="primary" id="create" type="button"><span aria-hidden="true">+</span> Provision server</button>
+        </header>
+        <ul id="instances" class="instances"></ul>
+        <p class="empty" id="empty" hidden>Provision a server to get started.</p>
+      </section>
+      <section class="panel activity" aria-labelledby="activity-title">
+        <header class="section-head"><div><h2 id="activity-title">Activity</h2><p>Recent workspace operations.</p></div></header>
+        <ol id="activity"></ol>
+      </section>
+    </div>
+    <footer><span>MoolyaHost portal prototype</span><button id="reset" type="button">Reset sample data</button></footer>
+    <p id="status" class="sr-only" role="status"></p>
+  </main>
+  <dialog id="provision" aria-labelledby="provision-title">
+    <form id="create-form">
+      <p class="eyebrow">Simulated instance</p>
+      <h2 id="provision-title">Provision server</h2>
+      <p class="help">Choose a hostname, server size, and operating system.</p>
+      <label>Hostname
+        <input name="hostname" required minlength="3" maxlength="30" pattern="[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?" aria-describedby="hostname-hint" placeholder="e.g. staging-web">
+      </label>
+      <small id="hostname-hint">3–30 lowercase letters, digits, or hyphens. Start and end with a letter or digit.</small>
+      <label>Plan
+        <select name="plan">
+          <option value="2">NVMe 2 · 1 vCPU · 2 GB RAM</option>
+          <option value="4">NVMe 4 · 2 vCPU · 4 GB RAM</option>
+          <option value="8">NVMe 8 · 4 vCPU · 8 GB RAM</option>
+          <option value="16">NVMe 16 · 8 vCPU · 16 GB RAM</option>
+        </select>
+      </label>
+      <label>Operating system
+        <select name="os"><option>Ubuntu 24.04</option><option>Debian 12</option></select>
+      </label>
+      <div class="dialog-actions"><button id="cancel" type="button">Cancel</button><button class="primary" type="submit">Provision server</button></div>
+    </form>
+  </dialog>
+  <template id="instance-template">
+    <li class="instance">
+      <div class="machine" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M6.5 7.5h2m-2 9h2"/></svg></div>
+      <div class="server-info"><h3></h3><p></p></div>
+      <span class="state"></span>
+      <div class="controls"><button data-action="toggle" type="button"></button><button data-action="restart" type="button">Restart</button></div>
+    </li>
+  </template>
+</body>
+</html>
